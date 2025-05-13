@@ -16,7 +16,8 @@ import model.Usuario;
  *
  * @author Aline
  */
-@WebServlet(name = "UsuarioController", urlPatterns = {"/UsuarioController"})
+
+//@WebServlet(name = "UsuarioController", urlPatterns = {"/UsuarioController"})
 public class UsuarioController extends HttpServlet {
 
     /**
@@ -58,19 +59,25 @@ public class UsuarioController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         UsuarioDAO udao = new UsuarioDAO();
+
+        // Ação de deletar um usuário
         if ("deletar".equals(request.getParameter("action"))) {
             int id = Integer.parseInt(request.getParameter("id"));
             udao.deletar(id);
             response.sendRedirect("UsuarioController");
+
+        // Ação de alterar um usuário
         } else if ("alterar".equals(request.getParameter("action"))) {
             Usuario usuario = udao.buscarPorId(Integer.parseInt(request.getParameter("id")));
             request.setAttribute("usuario", usuario);
-            RequestDispatcher rs = request.getRequestDispatcher("/index.jsp");
+            RequestDispatcher rs = request.getRequestDispatcher("./index.jsp");
             rs.forward(request, response);
-        } else {
-            List lista = udao.listarTodos();
+
+        // Ação de listar os usuários
+        } else if ("listar".equals(request.getParameter("action")) || request.getParameter("action") == null) {
+            List<Usuario> lista = udao.listarTodos();
             request.setAttribute("usuarios", lista);
-            RequestDispatcher rs = request.getRequestDispatcher("/listaUsuarios.jsp");
+            RequestDispatcher rs = request.getRequestDispatcher("/view/listaUsuarios.jsp");
             rs.forward(request, response);
         }
     }
