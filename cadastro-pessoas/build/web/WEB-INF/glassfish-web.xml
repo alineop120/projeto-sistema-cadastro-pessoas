@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<glassfish-web-app xmlns="http://glassfish.org/xml/ns/javaee"
-                   version="3.1"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://glassfish.org/xml/ns/javaee
-                                       http://glassfish.org/xml/ns/javaee/glassfish-web-app_3_1.xsd">
-    <context-root>/cadastro-pessoas</context-root>
-</glassfish-web-app>
