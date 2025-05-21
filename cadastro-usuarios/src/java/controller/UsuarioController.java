@@ -1,23 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
+import dao.UsuarioDAO;
+import java.util.List;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Usuario;
 
 /**
  *
  * @author Aline
  */
-@WebServlet(name = "UsuarioController", urlPatterns = {"/UsuarioController"})
+// @WebServlet(name = "UsuarioController", urlPatterns = {"/UsuarioController"})
 public class UsuarioController extends HttpServlet {
 
     /**
@@ -37,7 +36,7 @@ public class UsuarioController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UsuarioController</title>");            
+            out.println("<title>Servlet UsuarioController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet UsuarioController at " + request.getContextPath() + "</h1>");
@@ -58,7 +57,29 @@ public class UsuarioController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String action = request.getParameter("action");
+        UsuarioDAO udao = new UsuarioDAO();
+
+        if ("deletar".equals(action)) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            udao.deletar(id);
+            response.sendRedirect("UsuarioController");
+
+        } else if ("alterar".equals(action)) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            Usuario usuario = udao.buscarPorId(id);
+            request.setAttribute("usuario", usuario);
+            RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+            rd.forward(request, response);
+
+        } else if ("listar".equals(action)) {
+            List<Usuario> lista = udao.listarTodos();
+            request.setAttribute("usuarios", lista);
+            RequestDispatcher rd = request.getRequestDispatcher("/view/listaUsuarios.jsp");
+            rd.forward(request, response);
+        } else {
+            response.sendRedirect("index.jsp");
+        }
     }
 
     /**
@@ -72,7 +93,28 @@ public class UsuarioController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String nome = request.getParameter("usuarioNome");
+        String email = request.getParameter("usuarioEmail");
+        String senha = request.getParameter("usuarioSenha");
+        int nivel = Integer.parseInt(request.getParameter("nivel"));
+
+        Usuario usuario = new Usuario();
+        usuario.setNome(nome);
+        usuario.setEmail(email);
+        usuario.setSenha(senha);
+        usuario.setNivelAcesso(nivel);
+
+        UsuarioDAO udao = new UsuarioDAO();
+
+        int id = Integer.parseInt(request.getParameter("id"));
+        if (id == 0) {
+            udao.inserir(usuario);
+        } else {
+            usuario.setId(id);
+            udao.atualizar(usuario);
+        }
+
+        response.sendRedirect("UsuarioController");
     }
 
     /**

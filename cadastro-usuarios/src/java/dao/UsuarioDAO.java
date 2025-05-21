@@ -35,8 +35,8 @@ public class UsuarioDAO {
     public void inserir(Usuario usuario) {
         try (Connection conn = ConnectionFactory.getConnection()) {
             PreparedStatement ps = conn.prepareStatement(
-            "insert into usuarios(nome, senha, email, acesso) values( ?,  ?,  ?,  ?)");
-ps.setString(1, usuario.getNome());
+                    "insert into usuarios(nome, senha, email, acesso) values( ?,  ?,  ?,  ?)");
+            ps.setString(1, usuario.getNome());
             ps.setString(2, usuario.getSenha());
             ps.setString(3, usuario.getEmail());
             ps.setInt(4, usuario.getNivelAcesso());
@@ -92,4 +92,31 @@ ps.setString(1, usuario.getNome());
         }
         return usuario;
     }
+
+    public boolean login(String username, String password) {
+        String sql = "SELECT * FROM usuarios WHERE email=? AND senha=? AND nivelAcesso != 0";
+        try (Connection conn = ConnectionFactory.getConnection();
+                PreparedStatement pstm = conn.prepareStatement(sql)) {
+
+            pstm.setString(1, username);  // Email
+            pstm.setString(2, password);  // Senha
+
+            System.out.println("Executando a consulta: " + sql);  // Verificar SQL
+            try (ResultSet rs = pstm.executeQuery()) {
+                if (rs.next()) {
+                    // Quando encontrar o usuário, exibe o nome dele no console para debug
+                    System.out.println("Usuário encontrado: " + rs.getString("nome"));
+                    return true;  // Retorna true se encontrou o usuário
+                } else {
+                    System.out.println("Usuário não encontrado");
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao autenticar: " + e.getMessage());
+        }
+
+        return false;  // Retorna false se não encontrou o usuário
+    }
+
 }

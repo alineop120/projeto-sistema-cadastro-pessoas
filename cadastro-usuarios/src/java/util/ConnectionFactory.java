@@ -9,16 +9,21 @@ import java.sql.SQLException;
  * @author Aline
  */
 public class ConnectionFactory {
-    private static final String URL = "jdbc:mysql://localhost:3306/cadastrosbd";
-    private static final String USER = "root";
-    private static final String PASSWORD = "";
 
-    public static Connection getConnection() throws SQLException {
+    public static Connection getConnection() {
         try {
+            // Certifique-se de que o driver JDBC está registrado
             Class.forName("com.mysql.cj.jdbc.Driver");
-            return DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (ClassNotFoundException e) {
-            throw new SQLException("Driver JDBC não encontrado!", e);
+
+            // URL de conexão com o banco de dados MySQL
+            String url = "jdbc:mysql://localhost:3306/seu_banco_de_dados?useSSL=false&serverTimezone=UTC";
+            String usuario = "root";  // Altere se necessário
+            String senha = "root";    // Altere se necessário
+
+            return DriverManager.getConnection(url, usuario, senha);
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException("Erro na conexão com o banco de dados", e);
         }
     }
 }
+

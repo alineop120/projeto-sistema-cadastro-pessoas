@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/aline/OneDrive/GitHub/etb-protejos/projeto-sistema-cadastro-pessoas/cadastro-pessoas/web/view/index.jsp</file>
-            <file>file:/C:/Users/aline/OneDrive/GitHub/etb-protejos/projeto-sistema-cadastro-pessoas/cadastro-pessoas/src/java/util/ConnectionFactory.java</file>
-            <file>file:/C:/Users/aline/OneDrive/GitHub/etb-protejos/projeto-sistema-cadastro-pessoas/cadastro-pessoas/src/java/model/Usuario.java</file>
-            <file>file:/C:/Users/aline/OneDrive/GitHub/etb-protejos/projeto-sistema-cadastro-pessoas/cadastro-pessoas/src/java/dao/UsuarioDAO.java</file>
-            <file>file:/C:/Users/aline/OneDrive/GitHub/etb-protejos/projeto-sistema-cadastro-pessoas/cadastro-pessoas/web/view/listaUsuarios.jsp</file>
+            <file>file:/C:/Users/aline/OneDrive/GitHub/etb-protejos/projeto-sistema-cadastro-pessoas/cadastro-usuarios/src/java/util/ConnectionFactory.java</file>
+            <file>file:/C:/Users/aline/OneDrive/GitHub/etb-protejos/projeto-sistema-cadastro-pessoas/cadastro-usuarios/src/java/controller/AuthController.java</file>
+            <file>file:/C:/Users/aline/OneDrive/GitHub/etb-protejos/projeto-sistema-cadastro-pessoas/cadastro-usuarios/web/view/login.jsp</file>
+            <file>file:/C:/Users/aline/OneDrive/GitHub/etb-protejos/projeto-sistema-cadastro-pessoas/cadastro-usuarios/src/java/dao/teste.java</file>
+            <file>file:/C:/Users/aline/OneDrive/GitHub/etb-protejos/projeto-sistema-cadastro-pessoas/cadastro-usuarios/src/java/controller/UsuarioController.java</file>
+            <file>file:/C:/Users/aline/OneDrive/GitHub/etb-protejos/projeto-sistema-cadastro-pessoas/cadastro-usuarios/src/java/dao/UsuarioDAO.java</file>
+            <file>file:/C:/Users/aline/OneDrive/GitHub/etb-protejos/projeto-sistema-cadastro-pessoas/cadastro-usuarios/web/index.jsp</file>
+            <file>file:/C:/Users/aline/OneDrive/GitHub/etb-protejos/projeto-sistema-cadastro-pessoas/cadastro-usuarios/web/WEB-INF/web.xml</file>
         </group>
     </open-files>
 </project-private>
