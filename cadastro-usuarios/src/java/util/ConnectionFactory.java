@@ -10,15 +10,13 @@ import java.sql.SQLException;
  */
 public class ConnectionFactory {
 
-    public static Connection getConnection() {
+    public static Connection getConnection() throws ClassNotFoundException, SQLException {
         try {
-            // Certifique-se de que o driver JDBC está registrado
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver"); // Correto para MySQL 8.x
 
-            // URL de conexão com o banco de dados MySQL
-            String url = "jdbc:mysql://localhost:3306/seu_banco_de_dados?useSSL=false&serverTimezone=UTC";
-            String usuario = "root";  // Altere se necessário
-            String senha = "root";    // Altere se necessário
+            String url = "jdbc:mysql://localhost:3306/cadastrosbd?useSSL=false&serverTimezone=UTC";
+            String usuario = "root";
+            String senha = "";
 
             return DriverManager.getConnection(url, usuario, senha);
         } catch (ClassNotFoundException | SQLException e) {
@@ -26,4 +24,3 @@ public class ConnectionFactory {
         }
     }
 }
-

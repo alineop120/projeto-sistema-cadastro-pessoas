@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Aline
  */
-// @WebServlet(name = "AuthController", urlPatterns = {"/AuthController"})
+@WebServlet(name = "AuthController", urlPatterns = {"/controller/AuthController"})
 public class AuthController extends HttpServlet {
 
     /**
@@ -60,66 +60,68 @@ public class AuthController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        
-        String acao = request.getParameter("acao");
-        if (acao.equals("logoff")) {
-            session.invalidate();
-            response.sendRedirect("./index.jsp");
+        String action = request.getParameter("action");
+
+        if ("logoff".equals(action)) {
+            request.getSession().invalidate(); // Invalida a sessão do usuário
+            response.sendRedirect(request.getContextPath() + "/index.jsp");  // Redireciona para a página de login
         }
     }
 
-/**
- * Handles the HTTP <code>POST</code> method.
- *
- * @param request servlet request
- * @param response servlet response
- * @throws ServletException if a servlet-specific error occurs
- * @throws IOException if an I/O error occurs
- */
-@Override
-   protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    PrintWriter out = response.getWriter();
-    HttpSession session = request.getSession();
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
 
-    String username = request.getParameter("email");
-    String password = request.getParameter("senha");
+        // Obtendo os parâmetros enviados pelo formulário
+        String username = request.getParameter("email");
+        String password = request.getParameter("senha");
 
-    // Log para ver os valores
-    System.out.println("Email: " + username);
-    System.out.println("Senha: " + password);
+        // Log para ver os valores
+        System.out.println("Email: " + username);
+        System.out.println("Senha: " + password);
 
+        String mensagem = "";
+        String local = "";
 
-    String mensagem = "";
-    String local = "";
+        // Criando o DAO e tentando o login
+        UsuarioDAO uDAO = new UsuarioDAO();
+        if (uDAO.login(username, password)) {
+            mensagem = "Login Realizado com sucesso";
+            local = request.getContextPath() + "/controller/UsuarioController?action=listar";
 
-    UsuarioDAO uDAO = new UsuarioDAO();
-    if (uDAO.login(username, password)) {
-        mensagem = "Login Realizado com sucesso";
-        local = request.getContextPath() + "/UsuarioController?action=listar";
-        session.setAttribute("u", username);
-    } else {
-        mensagem = "Falha na autenticação, Usuario:" + username + 
-                    " não encontrado, por favor consulte o Núcleo de "
-                    + "Suporte à Informática do seu Setor"; 
-        local = "./index.jsp"; 
-    } 
- 
-    out.println("<script type='text/javascript'>");
-    out.println("alert('" + mensagem + "');");
-    out.println("location.href='" + local + "';");
-    out.println("</script>");
+            // Definindo a sessão após o login bem-sucedido
+            HttpSession session = request.getSession();
+            session.setAttribute("u", username);  // Armazenando o nome de usuário na sessão
+        } else {
+            mensagem = "Falha na autenticação, Usuario: " + username
+                    + " não encontrado, por favor consulte o Núcleo de "
+                    + "Suporte à Informática do seu Setor";
+            local = "../index.jsp";
+        }
 
+        // Exibindo a mensagem de alerta e redirecionando para a página apropriada
+        out.println("<script type='text/javascript'>");
+        out.println("alert('" + mensagem + "');");
+        out.println("location.href='" + local + "';");
+        out.println("</script>");
     }
 
-/**
- * Returns a short description of the servlet.
- *
- * @return a String containing servlet description
- */
-@Override
-        public String getServletInfo() {
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

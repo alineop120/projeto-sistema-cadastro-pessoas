@@ -8,12 +8,12 @@ public class teste {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         
         // Defina o email e senha para testar o login
-        String email = "joao.silva@email.com";
+        String email = "João da Silva";
         String senha = "senha1";
         
         // Imprimir as credenciais para depuração
         System.out.println("Tentando logar com:");
-        System.out.println("Email: " + email);
+        System.out.println("Nome: " + email);
         System.out.println("Senha: " + senha);
         
         // Teste a função de login

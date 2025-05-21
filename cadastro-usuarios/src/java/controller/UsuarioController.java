@@ -16,7 +16,7 @@ import model.Usuario;
  *
  * @author Aline
  */
-// @WebServlet(name = "UsuarioController", urlPatterns = {"/UsuarioController"})
+@WebServlet(name = "UsuarioController", urlPatterns = {"/controller/UsuarioController"})
 public class UsuarioController extends HttpServlet {
 
     /**
@@ -60,25 +60,38 @@ public class UsuarioController extends HttpServlet {
         String action = request.getParameter("action");
         UsuarioDAO udao = new UsuarioDAO();
 
+        // Verificando qual ação o usuário deseja realizar
         if ("deletar".equals(action)) {
-            int id = Integer.parseInt(request.getParameter("id"));
-            udao.deletar(id);
-            response.sendRedirect("UsuarioController");
-
+            String idStr = request.getParameter("id");
+            if (idStr != null) {
+                int id = Integer.parseInt(idStr);
+                System.out.println("Deletando o usuário com ID: " + id);  // Verifique no console
+                udao.deletar(id);
+                response.sendRedirect(request.getContextPath() + "/controller/UsuarioController?action=listar");
+            } else {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID inválido para exclusão.");
+            }
         } else if ("alterar".equals(action)) {
             int id = Integer.parseInt(request.getParameter("id"));
-            Usuario usuario = udao.buscarPorId(id);
-            request.setAttribute("usuario", usuario);
-            RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
-            rd.forward(request, response);
+            Usuario usuario = udao.buscarPorId(id);  // Busca o usuário para edição
+
+            if (usuario != null) {
+                request.setAttribute("usuario", usuario);  // Passa o usuário para o JSP de edição
+                RequestDispatcher rd = request.getRequestDispatcher("/view/editarUsuarios.jsp");
+                rd.forward(request, response);
+            } else {
+                // Caso não encontre o usuário, redireciona para a lista de usuários
+                response.sendRedirect(request.getContextPath() + "/controller/UsuarioController?action=listar");
+            }
 
         } else if ("listar".equals(action)) {
             List<Usuario> lista = udao.listarTodos();
-            request.setAttribute("usuarios", lista);
+            request.setAttribute("usuarios", lista);  // Passa a lista de usuários para o JSP
             RequestDispatcher rd = request.getRequestDispatcher("/view/listaUsuarios.jsp");
             rd.forward(request, response);
         } else {
-            response.sendRedirect("index.jsp");
+            // Caso a ação não seja válida, redireciona para o login (index.jsp)
+            response.sendRedirect(request.getContextPath() + "/index.jsp");
         }
     }
 

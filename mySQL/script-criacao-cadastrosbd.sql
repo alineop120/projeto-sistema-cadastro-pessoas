@@ -13,10 +13,9 @@ INSERT INTO usuarios (nome, email, senha, nivelAcesso) VALUES
 	('João da Silva', 'joao.silva@email.com', 'senha1', 1),
 	('Maria Oliveira', 'maria.oliveira@email.com', 'senha2', 2),
 	('Carlos Souza', 'carlos.souza@email.com', 'senha3', 1),
-	('Ana Pereira', 'ana.pereira@email.com', 'senha4', 2);
+	('Ana Pereira', 'ana.pereira@email.com', 'senha4', 2),
+    ('Helio', 'helio@email.com', 'senha5', 1);
 
 select * from usuarios;
 
 -- DROP DATABASE cadastrosbd;
-
-
