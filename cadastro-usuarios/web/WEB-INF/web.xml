@@ -4,7 +4,6 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
                              http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
-
     <!-- Mapeamento do UsuarioController -->
     <servlet>
         <servlet-name>UsuarioController</servlet-name>
@@ -12,9 +11,9 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>UsuarioController</servlet-name>
-        <url-pattern>/UsuarioController</url-pattern>
+        <url-pattern>/controller/UsuarioController</url-pattern>
     </servlet-mapping>
-
+    
     <!-- Mapeamento do AuthController -->
     <servlet>
         <servlet-name>AuthController</servlet-name>
@@ -22,7 +21,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>AuthController</servlet-name>
-        <url-pattern>/AuthController</url-pattern>
+        <url-pattern>/controller/AuthController</url-pattern>
     </servlet-mapping>
 
     <!-- Página de boas-vindas padrão -->
